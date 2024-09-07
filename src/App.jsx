@@ -1,7 +1,13 @@
 import LandingPage from "./Pages/LandingPage";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
-  return <LandingPage />;
+  return (
+    <div>
+      <LandingPage />
+      <ToastContainer />
+    </div>
+  );
 };
 
 export default App;
