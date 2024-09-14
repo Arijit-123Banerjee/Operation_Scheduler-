@@ -1,19 +1,57 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/Components/ui/button";
-import CustomButton from "@/Components/CustomButton";
+import { db } from "../Firebase"; // Adjust the path as needed
+import { collection, addDoc } from "firebase/firestore";
 
 const SignUpPage = () => {
   const [role, setRole] = useState("user");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent the form from submitting and refreshing the page
+  const validatePassword = (password) => {
+    const lengthValid = password.length > 6;
+    const uppercaseValid = /[A-Z]/.test(password);
+    const digitValid = /\d/.test(password);
+    return lengthValid && uppercaseValid && digitValid;
+  };
 
-    if (role === "user") {
-      navigate("/userdashboard");
-    } else if (role === "admin") {
-      navigate("/admindashboard");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const newErrors = {};
+    if (!validatePassword(password)) {
+      newErrors.password =
+        "Password must be at least 7 characters long, include one uppercase letter, and one digit.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    try {
+      const userCollection = collection(
+        db,
+        role === "user" ? "users" : "admins"
+      );
+
+      await addDoc(userCollection, {
+        email,
+        password,
+        ...(role === "user" && { username: name }),
+      });
+
+      if (role === "user") {
+        navigate("/userdashboard");
+      } else if (role === "admin") {
+        navigate("/admindashboard");
+      }
+    } catch (error) {
+      console.error("Error adding document: ", error);
     }
   };
 
@@ -82,6 +120,8 @@ const SignUpPage = () => {
                     name="email"
                     type="email"
                     required=""
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
                     placeholder="Enter email"
                   />
@@ -96,10 +136,15 @@ const SignUpPage = () => {
                     name="password"
                     type="password"
                     required=""
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
                     placeholder="Enter password"
                   />
                 </div>
+                {errors.password && (
+                  <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                )}
               </div>
               {role === "user" && (
                 <div>
@@ -111,6 +156,8 @@ const SignUpPage = () => {
                       name="name"
                       type="text"
                       required=""
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
                       placeholder="Enter name"
                     />

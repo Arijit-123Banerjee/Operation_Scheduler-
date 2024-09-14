@@ -1,71 +1,42 @@
-import React, { useState } from "react";
-
-// Mock data
-const operations = [
-  {
-    id: 1,
-    patientName: "John Doe",
-    operationName: "Appendectomy",
-    doctorName: "Dr. Smith",
-    operationDate: "Sep 28, 2022",
-    operationTime: "10:30 AM",
-    otRoomNumber: "101",
-  },
-  {
-    id: 2,
-    patientName: "Jane Roe",
-    operationName: "Cholecystectomy",
-    doctorName: "Dr. Adams",
-    operationDate: "Sep 29, 2022",
-    operationTime: "11:45 AM",
-    otRoomNumber: "102",
-  },
-  {
-    id: 3,
-    patientName: "Michael Brown",
-    operationName: "Hernia Repair",
-    doctorName: "Dr. Taylor",
-    operationDate: "Oct 1, 2022",
-    operationTime: "09:00 AM",
-    otRoomNumber: "103",
-  },
-  {
-    id: 4,
-    patientName: "Emily White",
-    operationName: "Cataract Surgery",
-    doctorName: "Dr. Wilson",
-    operationDate: "Oct 3, 2022",
-    operationTime: "01:00 PM",
-    otRoomNumber: "104",
-  },
-  {
-    id: 5,
-    patientName: "Robert Black",
-    operationName: "Knee Replacement",
-    doctorName: "Dr. Lee",
-    operationDate: "Oct 5, 2022",
-    operationTime: "02:30 PM",
-    otRoomNumber: "105",
-  },
-  {
-    id: 6,
-    patientName: "Alice Green",
-    operationName: "Hip Replacement",
-    doctorName: "Dr. Clark",
-    operationDate: "Oct 7, 2022",
-    operationTime: "11:00 AM",
-    otRoomNumber: "106",
-  },
-  // Add more mock data as needed
-];
+import React, { useState, useEffect } from "react";
+import Modal from "./Modal"; // Adjust the import path as needed
+import { db, collection, addDoc, query, where, getDocs } from "@/Firebase";
 
 const OperationList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
+  const [operationsList, setOperationsList] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const operationsPerPage = 5;
 
+  useEffect(() => {
+    const fetchOperations = async () => {
+      const q = query(collection(db, "operations"));
+      const querySnapshot = await getDocs(q);
+      const operations = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setOperationsList(operations);
+    };
+
+    fetchOperations();
+  }, []);
+
+  const handleAddOperation = async (newOperation) => {
+    try {
+      const docRef = await addDoc(collection(db, "operations"), newOperation);
+      setOperationsList((prev) => [
+        ...prev,
+        { id: docRef.id, ...newOperation },
+      ]);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
   // Filter operations based on the search term
-  const filteredOperations = operations.filter((operation) =>
+  const filteredOperations = operationsList.filter((operation) =>
     Object.values(operation).some((value) =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
@@ -97,7 +68,10 @@ const OperationList = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="flex items-center gap-2 rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white focus:outline-none focus:ring hover:bg-green-700">
+          <button
+            className="flex items-center gap-2 rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white focus:outline-none focus:ring hover:bg-green-700"
+            onClick={() => setIsModalOpen(true)}
+          >
             Add New Operation
           </button>
         </div>
@@ -195,7 +169,14 @@ const OperationList = () => {
           </div>
         </div>
       </div>
-      zz
+
+      {/* Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAddOperation={handleAddOperation}
+        operationsList={operationsList} // Pass the list of operations
+      />
     </div>
   );
 };

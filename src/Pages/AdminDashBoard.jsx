@@ -2,9 +2,17 @@ import Sidebar from "@/Components/AdminCompoents/Sidebar";
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import { Sling as Hamburger } from "hamburger-react";
+import EmergencyModal from "@/Components/Emergencies/EmergencyModal";
+import { FaExclamationCircle } from "react-icons/fa";
 
 const AdminDashBoard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
+
+  const handleAddEmergency = (emergencyDetails) => {
+    // Handle the emergency addition here
+    console.log("Emergency details added:", emergencyDetails);
+  };
 
   return (
     <div className="flex h-screen relative">
@@ -32,7 +40,21 @@ const AdminDashBoard = () => {
         }`}
       >
         <Outlet /> {/* This is where the nested routes will be rendered */}
+        {/* Emergency Button */}
+        <button
+          onClick={() => setIsEmergencyModalOpen(true)}
+          className="fixed bottom-4 right-4 z-50 p-4 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700"
+        >
+          <FaExclamationCircle size={24} /> {/* Emergency icon */}
+        </button>
       </div>
+
+      {/* Emergency Modal */}
+      <EmergencyModal
+        isOpen={isEmergencyModalOpen}
+        onClose={() => setIsEmergencyModalOpen(false)}
+        onAddEmergency={handleAddEmergency}
+      />
     </div>
   );
 };

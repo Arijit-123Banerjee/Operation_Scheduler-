@@ -1,48 +1,63 @@
-import React from "react";
-
-const doctors = [
-  {
-    id: 1,
-    name: "Dr. John Smith",
-    image:
-      "https://images.unsplash.com/photo-1590098719884-1e4aa144dfb5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    rating: 4.5,
-    status: "Present",
-    contact: "+1 123 456 7890",
-  },
-  {
-    id: 2,
-    name: "Dr. Emily Davis",
-    image:
-      "https://images.unsplash.com/photo-1527363121637-1a622f5aab32?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    rating: 4.2,
-    status: "Absent",
-    contact: "+1 987 654 3210",
-  },
-  {
-    id: 3,
-    name: "Dr. Michael Brown",
-    image:
-      "https://images.unsplash.com/photo-1507120410846-1f342e6e6f38?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    rating: 4.8,
-    status: "Present",
-    contact: "+1 555 666 7777",
-  },
-  // Add more doctors as needed
-];
+// DoctorList.js
+import React, { useState, useEffect } from "react";
+import DoctorModal from "./DoctorModal";
+import { db, collection, addDoc, getDocs } from "@/Firebase"; // Adjust the import path as needed
 
 const DoctorList = () => {
-  const handleAddDoctor = () => {
-    // Logic to add a new doctor would go here
-    console.log("Add Doctor button clicked!");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [doctorList, setDoctorList] = useState([]);
+  const [error, setError] = useState("");
+
+  // Fetch doctors from Firestore on component mount
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "doctors"));
+        const doctors = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setDoctorList(doctors);
+      } catch (err) {
+        setError("Error fetching doctors: " + err.message);
+      }
+    };
+
+    fetchDoctors();
+  }, []);
+
+  // Handle adding a new doctor
+  const handleAddDoctor = async (newDoctor) => {
+    try {
+      // Add new doctor to Firestore
+      await addDoc(collection(db, "doctors"), newDoctor);
+
+      // Fetch updated list of doctors
+      const querySnapshot = await getDocs(collection(db, "doctors"));
+      const doctors = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      // Update local state
+      setDoctorList(doctors);
+      setIsModalOpen(false);
+    } catch (error) {
+      setError("Error adding doctor: " + error.message);
+    }
+  };
+
+  const openAddModal = () => {
+    setIsModalOpen(true);
   };
 
   return (
     <div className="mx-auto max-w-screen-lg px-4 py-8 sm:px-8">
+      {error && <p className="text-red-600 mb-4">{error}</p>}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold text-gray-700">Doctors List</h2>
         <button
-          onClick={handleAddDoctor}
+          onClick={openAddModal}
           className="flex items-center gap-2 rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white focus:outline-none focus:ring hover:bg-green-700"
         >
           Add Doctor
@@ -53,7 +68,6 @@ const DoctorList = () => {
           <table className="min-w-full table-auto">
             <thead>
               <tr className="bg-blue-600 text-left text-xs font-semibold uppercase tracking-widest text-white">
-                <th className="px-3 py-3 sm:px-5 sm:py-4">Photo</th>
                 <th className="px-3 py-3 sm:px-5 sm:py-4">Name</th>
                 <th className="px-3 py-3 sm:px-5 sm:py-4">Rating</th>
                 <th className="px-3 py-3 sm:px-5 sm:py-4">Status</th>
@@ -61,20 +75,13 @@ const DoctorList = () => {
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              {doctors.map((doctor) => (
+              {doctorList.map((doctor) => (
                 <tr
                   key={doctor.id}
                   className="bg-white border-b border-gray-200"
                 >
                   <td className="px-3 py-4 sm:px-5 sm:py-5">
-                    <img
-                      src={doctor.image}
-                      alt={`${doctor.name}`}
-                      className="h-16 w-16 rounded-full object-cover"
-                    />
-                  </td>
-                  <td className="px-3 py-4 sm:px-5 sm:py-5">
-                    <p className="font-semibold">{doctor.name}</p>
+                    <p>{doctor.name}</p>
                   </td>
                   <td className="px-3 py-4 sm:px-5 sm:py-5">
                     <div className="flex items-center">
@@ -128,6 +135,13 @@ const DoctorList = () => {
           </table>
         </div>
       </div>
+
+      {/* Doctor Modal */}
+      <DoctorModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={handleAddDoctor}
+      />
     </div>
   );
 };
