@@ -24,7 +24,9 @@ const EmergencyModal = ({ isOpen, onClose, onAddEmergency }) => {
         >
           <FaTimes size={20} /> {/* Close icon */}
         </button>
-        <h2 className="text-lg font-semibold mb-4">Development Mode </h2>
+        <h2 className="text-lg font-semibold mb-4">
+          This Feature is On Development Mode{" "}
+        </h2>
       </div>
     </div>
   );

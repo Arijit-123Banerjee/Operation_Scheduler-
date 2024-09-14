@@ -1,8 +1,15 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaSignOutAlt } from "react-icons/fa"; // Import React Icons for logout
 
 const Sidebar = ({ closeSidebar }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Simulate logout and navigation for demonstration
+    navigate("/");
+  };
 
   return (
     <nav className="bg-white shadow-sm fixed inset-0 z-1 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100">
@@ -106,6 +113,13 @@ const Sidebar = ({ closeSidebar }) => {
             </Link>
           </li>
         </ul>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 text-red-600 hover:bg-red-100 py-3 px-4 rounded-lg w-full transition-colors duration-200 ease-in-out"
+        >
+          <FaSignOutAlt className="text-lg" />
+          <span className="font-sans font-bold">Logout</span>
+        </button>
       </div>
     </nav>
   );

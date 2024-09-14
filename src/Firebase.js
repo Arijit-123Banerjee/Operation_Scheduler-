@@ -6,6 +6,9 @@ import {
   query,
   where,
   getDocs,
+  doc,
+  getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -20,4 +23,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export { db, collection, addDoc, query, where, getDocs };
+export {
+  db,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+};

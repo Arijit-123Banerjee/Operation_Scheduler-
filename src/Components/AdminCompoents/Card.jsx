@@ -47,7 +47,7 @@ const Card = () => {
           </div>
           <div>
             <p className="text-sm text-gray-500">Emergencies</p>
-            <p className="text-xl font-semibold">8</p>
+            <p className="text-xl font-semibold">0</p>
           </div>
         </div>
       </div>

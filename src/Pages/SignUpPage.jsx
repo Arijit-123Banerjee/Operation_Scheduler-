@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/Components/ui/button";
 import { db } from "../Firebase"; // Adjust the path as needed
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 
 const SignUpPage = () => {
   const [role, setRole] = useState("user");
@@ -39,6 +39,31 @@ const SignUpPage = () => {
         role === "user" ? "users" : "admins"
       );
 
+      const q = query(userCollection, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        // Email exists, check if the password matches
+        const existingDoc = querySnapshot.docs[0];
+        const existingData = existingDoc.data();
+
+        if (existingData.password === password) {
+          // Password is the same as the existing one
+          if (role === "user") {
+            navigate("/userdashboard");
+          } else if (role === "admin") {
+            navigate("/admindashboard");
+          }
+          return; // Exit function to prevent further processing
+        } else {
+          newErrors.email =
+            "This email is already registered. Please provide the correct password.";
+          setErrors(newErrors);
+          return;
+        }
+      }
+
+      // Add the new document
       await addDoc(userCollection, {
         email,
         password,
@@ -52,6 +77,7 @@ const SignUpPage = () => {
       }
     } catch (error) {
       console.error("Error adding document: ", error);
+      // Handle additional errors (e.g., network errors) here
     }
   };
 
@@ -104,7 +130,10 @@ const SignUpPage = () => {
             </div>
           </div>
 
-          <form className="md:col-span-2 w-full py-6 px-6 sm:px-16 bg-white">
+          <form
+            className="md:col-span-2 w-full py-6 px-6 sm:px-16 bg-white"
+            onSubmit={handleSubmit}
+          >
             <div className="mb-6">
               <h3 className="text-gray-800 text-2xl font-bold">
                 {role === "user" ? "Create an account" : "Admin Login"}
@@ -119,13 +148,16 @@ const SignUpPage = () => {
                   <input
                     name="email"
                     type="email"
-                    required=""
+                    required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
                     placeholder="Enter email"
                   />
                 </div>
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                )}
               </div>
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">
@@ -135,7 +167,7 @@ const SignUpPage = () => {
                   <input
                     name="password"
                     type="password"
-                    required=""
+                    required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
@@ -155,7 +187,7 @@ const SignUpPage = () => {
                     <input
                       name="name"
                       type="text"
-                      required=""
+                      required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
@@ -168,8 +200,7 @@ const SignUpPage = () => {
             <div className="!mt-12">
               <button
                 className="rounded-xl bg-gradient-to-br from-green-600 to-emerald-400 px-6 py-4 font-dm text-sm font-medium text-white shadow-md shadow-green-400/50 transition-transform duration-200 ease-in-out hover:scale-[1.03]"
-                type="button"
-                onClick={handleSubmit}
+                type="submit"
               >
                 {role === "user" ? "Create an account" : "Login as Admin"}
               </button>
