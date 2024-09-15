@@ -12,7 +12,10 @@ const Sidebar = ({ closeSidebar }) => {
   };
 
   return (
-    <nav className="bg-white shadow-sm fixed inset-0 z-1 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100">
+    <nav
+      className="bg-[rgba(255,255,255,0.2)] shadow-lg rounded-xl fixed inset-0 z-10 my-4 ml-4 h-[calc(100vh-32px)] w-72 transition-transform duration-300 xl:translate-x-0 backdrop-blur-[12.5px] border border-[rgba(255,255,255,0.18)]"
+      style={{ boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)" }}
+    >
       <div className="relative">
         <a className="py-6 px-8 text-center" href="#/">
           <h6 className="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-blue-gray-900">

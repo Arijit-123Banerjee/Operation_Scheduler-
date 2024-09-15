@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal"; // Adjust the import path as needed
-import { db, collection, addDoc, query, where, getDocs } from "@/Firebase";
+import { db, collection, addDoc, query, getDocs } from "@/Firebase";
 
 const OperationList = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,7 +64,7 @@ const OperationList = () => {
           <input
             type="text"
             placeholder="Search..."
-            className="w-full rounded-md border px-4 py-2 text-sm sm:w-auto"
+            className="w-full rounded-md border border-gray-300 px-4 py-2 text-sm bg-white bg-opacity-30 backdrop-blur-md shadow-lg sm:w-auto"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -76,7 +76,7 @@ const OperationList = () => {
           </button>
         </div>
       </div>
-      <div className="overflow-hidden rounded-lg border">
+      <div className="overflow-hidden rounded-lg border bg-white bg-opacity-30 backdrop-blur-md shadow-lg">
         <div className="overflow-x-auto">
           <table className="min-w-full">
             <thead>
@@ -142,7 +142,7 @@ const OperationList = () => {
             </tbody>
           </table>
         </div>
-        <div className="flex flex-col items-center border-t bg-white px-5 py-5 sm:flex-row sm:justify-between">
+        <div className="flex flex-col items-center border-t bg-white bg-opacity-30 backdrop-blur-md shadow-lg px-5 py-5 sm:flex-row sm:justify-between">
           <span className="text-xs text-gray-600 sm:text-sm">
             Showing {startIndex + 1} to {currentOperations.length + startIndex}{" "}
             of {filteredOperations.length} Entries

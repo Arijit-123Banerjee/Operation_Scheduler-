@@ -15,7 +15,14 @@ const AdminDashBoard = () => {
   };
 
   return (
-    <div className="flex h-screen relative">
+    <div
+      className="flex h-screen relative"
+      style={{
+        backgroundImage:
+          'url("https://img.freepik.com/free-vector/clean-medical-background_53876-97927.jpg")',
+        backgroundSize: "cover",
+      }}
+    >
       {/* Sidebar for desktop */}
       <div
         className={`fixed inset-0 xl:static xl:w-[20%] transition-transform duration-300 ${

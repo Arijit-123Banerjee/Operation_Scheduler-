@@ -82,9 +82,9 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="background_svg">
-      <div className="font-[sans-serif] max-w-4xl flex items-center mx-auto md:h-screen p-4">
-        <div className="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden">
+    <div className="background_svg min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-4xl p-4">
+        <div className="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden backdrop-filter backdrop-blur-lg bg-white/20 border border-white/30">
           <div className="max-md:order-1 flex flex-col justify-center space-y-16 max-md:mt-16 min-h-full bg-[#25bc73] lg:px-8 px-4 py-4">
             <div>
               <h4 className="text-white text-lg font-semibold">
@@ -131,7 +131,7 @@ const SignUpPage = () => {
           </div>
 
           <form
-            className="md:col-span-2 w-full py-6 px-6 sm:px-16 bg-white"
+            className="md:col-span-2 w-full py-6 px-6 sm:px-16 bg-white/20 backdrop-filter backdrop-blur-lg border border-white/30 rounded-lg"
             onSubmit={handleSubmit}
           >
             <div className="mb-6">
@@ -151,7 +151,7 @@ const SignUpPage = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
+                    className="text-gray-800 bg-white/30 border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
                     placeholder="Enter email"
                   />
                 </div>
@@ -170,7 +170,7 @@ const SignUpPage = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
+                    className="text-gray-800 bg-white/30 border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
                     placeholder="Enter password"
                   />
                 </div>
@@ -190,7 +190,7 @@ const SignUpPage = () => {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
+                      className="text-gray-800 bg-white/30 border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500"
                       placeholder="Enter name"
                     />
                   </div>

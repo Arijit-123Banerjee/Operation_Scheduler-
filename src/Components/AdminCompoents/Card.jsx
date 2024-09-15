@@ -8,11 +8,11 @@ const Card = () => {
 
   return (
     <div>
-      <div className="m-10 grid gap-5 sm:grid-cols-3 mx-auto max-w-screen-lg">
+      <div className="m-10 grid gap-5 sm:grid-cols-3 mx-auto max-w-screen-lg max-sm:p-5">
         {/* Doctors Count Card */}
         <div
           onClick={() => navigate("/admindashboard/doctors")}
-          className="px-6 py-8 bg-white shadow-lg rounded-lg flex items-center space-x-4 cursor-pointer hover:bg-gray-100 transition"
+          className="px-6 py-8 bg-white bg-opacity-30 backdrop-blur-md shadow-lg rounded-lg flex items-center space-x-4 cursor-pointer hover:bg-gray-100 transition max-sm:py-8"
         >
           <div className="p-4 bg-blue-500 text-white rounded-full shadow-md">
             <FaUserMd className="h-10 w-10" />
@@ -26,7 +26,7 @@ const Card = () => {
         {/* Patient Count Card */}
         <div
           onClick={() => navigate("/admindashboard/patients")}
-          className="px-6 py-8 bg-white shadow-lg rounded-lg flex items-center space-x-4 cursor-pointer hover:bg-gray-100 transition"
+          className="px-6 py-8 bg-white bg-opacity-30 backdrop-blur-md shadow-lg rounded-lg flex items-center space-x-4 cursor-pointer hover:bg-gray-100 transition max-sm:py-8"
         >
           <div className="p-4 bg-green-500 text-white rounded-full shadow-md">
             <FaUser className="h-10 w-10" />
@@ -40,7 +40,7 @@ const Card = () => {
         {/* Emergencies Card */}
         <div
           // onClick={() => navigate("/admindashboard/emergencies")}
-          className="px-6 py-8 bg-white shadow-lg rounded-lg flex items-center space-x-4 cursor-pointer hover:bg-gray-100 transition"
+          className="px-6 py-8 bg-white bg-opacity-30 backdrop-blur-md shadow-lg rounded-lg flex items-center space-x-4 cursor-pointer hover:bg-gray-100 transition max-sm:py-8 "
         >
           <div className="p-4 bg-red-500 text-white rounded-full shadow-md">
             <FaExclamationTriangle className="h-10 w-10" />

@@ -14,17 +14,7 @@ const Header = () => {
             />
           </a>
         </div>
-        <ul className="hidden items-center justify-center gap-6 md:flex">
-          <li className="pt-1.5 font-dm text-sm font-medium text-slate-700">
-            <a href="#">Home</a>
-          </li>
-          <li className="pt-1.5 font-dm text-sm font-medium text-slate-700">
-            <a href="#">Freature</a>
-          </li>
-          <li className="pt-1.5 font-dm text-sm font-medium text-slate-700">
-            <a href="#">About Us</a>
-          </li>
-        </ul>
+
         <div className="flex-grow" />
         <div className="hidden items-center justify-center gap-6 md:flex">
           <a href="#" className="font-dm text-sm font-medium text-slate-700">
