@@ -25,25 +25,48 @@ const Register = () => {
     confirmPassword: "",
     role: "user",
   });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(""); // Clear error when user types
+  };
+
+  const validateForm = () => {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      setError("All fields are required");
+      return false;
+    }
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match");
-    } else {
-      console.log("Registration data:", formData);
+      setError("Passwords don't match");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form submitted"); // Debug log
+
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      console.log("Registration data:", formData); // Debug log
       const usersCollection = collection(db, "users");
-      addDoc(usersCollection, formData)
-        .then(() => {
-          console.log("User added successfully");
-          navigate("/", { state: { userRole: formData.role } });
-        })
-        .catch((error) => {
-          console.error("Error adding user:", error);
-        });
+      await addDoc(usersCollection, formData);
+      console.log("User added successfully");
+      navigate("/", { state: { userRole: formData.role } });
+    } catch (error) {
+      console.error("Error adding user:", error);
+      setError("Registration failed. Please try again.");
     }
   };
 
@@ -85,6 +108,7 @@ const Register = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          {error && <div className="mb-4 text-red-500 text-sm">{error}</div>}
           <form className="space-y-6" onSubmit={handleSubmit}>
             {fields.map(({ name, type, placeholder, icon }) => (
               <div key={name}>
