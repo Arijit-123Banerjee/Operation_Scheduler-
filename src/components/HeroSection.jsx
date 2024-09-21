@@ -5,6 +5,7 @@ import {
   FaBed,
   FaInfoCircle,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const HeroSection = ({ userRole }) => {
   const isAdmin = userRole === "admin";
@@ -56,13 +57,14 @@ const HeroSection = ({ userRole }) => {
               {(isAdmin || isUser) && (
                 <p className="mt-5 text-gray-600">
                   {isAdmin ? "View as user? " : "Are you an admin? "}
-                  <a
+                  <Link
+                    to={"/login"}
                     href="#"
                     title=""
                     className="text-black transition-all duration-200 hover:underline"
                   >
                     Switch role
-                  </a>
+                  </Link>
                 </p>
               )}
             </div>

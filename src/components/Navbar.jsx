@@ -148,11 +148,11 @@ export default function Navbar({ userRole }) {
             <div className="flex flex-col items-center px-5 space-y-2">
               {isAdmin ? (
                 <>
-                  <button className="flex items-center justify-center w-full px-4 py-2 border border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white rounded-md text-sm font-medium transition-colors duration-200">
-                    <FaUserPlus
-                      className="h-4 w-4 mr-2"
-                      onClick={handleRegister}
-                    />
+                  <button
+                    className="flex items-center justify-center w-full px-4 py-2 border border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white rounded-md text-sm font-medium transition-colors duration-200"
+                    onClick={handleRegister}
+                  >
+                    <FaUserPlus className="h-4 w-4 mr-2" />
                     Sign up for free
                   </button>
                   <button className="flex items-center justify-center w-full px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
@@ -167,7 +167,10 @@ export default function Navbar({ userRole }) {
                 </button>
               ) : (
                 <>
-                  <button className="flex items-center justify-center w-full px-4 py-2 border border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white rounded-md text-sm font-medium transition-colors duration-200">
+                  <button
+                    className="flex items-center justify-center w-full px-4 py-2 border border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white rounded-md text-sm font-medium transition-colors duration-200"
+                    onClick={handleRegister}
+                  >
                     <FaUserPlus className="h-4 w-4 mr-2" />
                     Sign up for free
                   </button>
