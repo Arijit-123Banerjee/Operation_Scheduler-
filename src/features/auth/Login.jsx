@@ -33,11 +33,16 @@ const Login = () => {
     e.preventDefault();
     setErrors({});
 
+    // Add form validation
+    if (!formData.email || !formData.password) {
+      setErrors({ login: "Please enter both email and password" });
+      return;
+    }
+
     const collectionName = loginType === "user" ? "users" : "admins";
     const q = query(
       collection(db, collectionName),
-      where("email", "==", formData.email),
-      where("password", "==", formData.password)
+      where("email", "==", formData.email.toLowerCase().trim())
     );
 
     try {
@@ -45,8 +50,25 @@ const Login = () => {
       if (querySnapshot.empty) {
         setErrors({ login: "Invalid email or password" });
       } else {
-        console.log("Login successful");
-        navigate("/");
+        const userDoc = querySnapshot.docs[0];
+        const userData = userDoc.data();
+
+        // Compare passwords (Note: This is not secure, use proper authentication)
+        if (userData.password === formData.password.trim()) {
+          console.log("Login successful");
+          // Store user info in localStorage or state management
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              id: userDoc.id,
+              email: userData.email,
+              type: loginType,
+            })
+          );
+          navigate("/");
+        } else {
+          setErrors({ login: "Invalid email or password" });
+        }
       }
     } catch (error) {
       console.error("Error during login: ", error);

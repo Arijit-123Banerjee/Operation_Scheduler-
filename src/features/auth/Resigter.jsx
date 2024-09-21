@@ -76,15 +76,15 @@ const Register = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Create your account
         </h2>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-3xl flex flex-col md:flex-row bg-white shadow-lg sm:rounded-lg overflow-hidden">
-        <div className="flex-1 p-8">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {fields.map(({ name, type, placeholder, icon }) => (
               <div key={name}>
@@ -133,7 +133,6 @@ const Register = () => {
             <button
               type="submit"
               className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition duration-150 ease-in-out"
-              onClick={handleSubmit}
             >
               Register
             </button>
@@ -161,12 +160,14 @@ const Register = () => {
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="flex-none w-full md:w-1/2 flex justify-center items-center p-4 bg-gray-50">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <img
             src={images[formData.role]}
             alt={formData.role === "admin" ? "Admin" : "User"}
-            className="max-w-full h-auto rounded-md shadow-md transition-all duration-300 ease-in-out"
+            className="w-full h-auto rounded-md shadow-md transition-all duration-300 ease-in-out"
           />
         </div>
       </div>
