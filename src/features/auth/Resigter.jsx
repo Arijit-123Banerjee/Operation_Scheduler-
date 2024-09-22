@@ -60,12 +60,21 @@ const Register = () => {
 
     try {
       console.log("Registration data:", formData); // Debug log
-      const usersCollection = collection(db, "users");
-      await addDoc(usersCollection, formData);
-      console.log("User added successfully");
+
+      // Determine the collection based on the user's role
+      const collectionName = formData.role === "admin" ? "admins" : "users";
+      const selectedCollection = collection(db, collectionName);
+
+      // Remove confirmPassword from the data to be stored
+      const { confirmPassword, ...dataToStore } = formData;
+
+      await addDoc(selectedCollection, dataToStore);
+      console.log(
+        `${formData.role} added successfully to ${collectionName} collection`
+      );
       navigate("/", { state: { userRole: formData.role } });
     } catch (error) {
-      console.error("Error adding user:", error);
+      console.error(`Error adding ${formData.role}:`, error);
       setError("Registration failed. Please try again.");
     }
   };

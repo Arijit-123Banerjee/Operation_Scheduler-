@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -53,19 +53,22 @@ const Login = () => {
         const userDoc = querySnapshot.docs[0];
         const userData = userDoc.data();
 
-        // Compare passwords (Note: This is not secure, use proper authentication)
         if (userData.password === formData.password.trim()) {
-          console.log("Login successful");
-          // Store user info in localStorage or state management
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              id: userDoc.id,
-              email: userData.email,
-              type: loginType,
-            })
-          );
-          navigate("/");
+          console.log(`${loginType} login successful`);
+          const userInfo = {
+            id: userDoc.id,
+            email: userData.email,
+            type: loginType,
+          };
+          localStorage.setItem("user", JSON.stringify(userInfo));
+
+          if (loginType === "admin") {
+            // Navigate to home page with admin props
+            navigate("/", { state: { userRole: "admin" } });
+          } else {
+            // For regular users, just navigate to home page
+            navigate("/");
+          }
         } else {
           setErrors({ login: "Invalid email or password" });
         }

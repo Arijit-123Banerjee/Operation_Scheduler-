@@ -33,10 +33,10 @@ export default function Navbar({ userRole }) {
 
   const navLinks = isAdmin
     ? [
-        { href: "/features", text: "Features", icon: FaClipboardList },
+        { href: "/services", text: "Services", icon: FaClipboardList },
+        { href: "/doctors-list", text: "Doctors List", icon: FaUserCog },
+        { href: "/store", text: "Store", icon: FaHotel },
         { href: "/faq", text: "FAQ", icon: FaQuestionCircle },
-        { href: "/watch-video", text: "Watch Video", icon: FaVideo },
-        { href: "/contact-manager", text: "Contact Manager", icon: FaUserCog },
       ]
     : isUser
     ? [
@@ -91,10 +91,12 @@ export default function Navbar({ userRole }) {
                     <FaUserPlus className="h-4 w-4 mr-2" />
                     Sign up for free
                   </button>
-                  <button className="flex items-center justify-center px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
-                    <FaCalendarAlt className="h-4 w-4 mr-2" />
-                    Schedule an operation
-                  </button>
+                  <Link to={"/admindashboard"}>
+                    <button className="flex items-center justify-center px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
+                      <FaCalendarAlt className="h-4 w-4 mr-2" />
+                      Schedule an operation
+                    </button>
+                  </Link>
                 </>
               ) : isUser ? (
                 <button className="flex items-center justify-center px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
@@ -155,7 +157,7 @@ export default function Navbar({ userRole }) {
                     <FaUserPlus className="h-4 w-4 mr-2" />
                     Sign up for free
                   </button>
-                  <button className="flex items-center justify-center w-full px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
+                  <button className="flex items-center justify-center w-full px-4 py-2 bg-sky-600 text-white  hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
                     <FaCalendarAlt className="h-4 w-4 mr-2" />
                     Schedule an operation
                   </button>

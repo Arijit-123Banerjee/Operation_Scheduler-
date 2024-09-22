@@ -1,15 +1,18 @@
-import {
-  FaCalendarAlt,
-  FaUserMd,
-  FaUser,
-  FaBed,
-  FaInfoCircle,
-} from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaCalendarAlt, FaInfoCircle } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
 const HeroSection = ({ userRole }) => {
   const isAdmin = userRole === "admin";
   const isUser = userRole === "user";
+  const navigate = useNavigate(); // Hook for programmatic navigation
+
+  const handleNavigation = () => {
+    if (isAdmin) {
+      navigate("/admindashboard");
+    } else if (isUser) {
+      navigate("/userdashboard");
+    }
+  };
 
   return (
     <div className="bg-white">
@@ -36,14 +39,14 @@ const HeroSection = ({ userRole }) => {
               </p>
               {(isAdmin || isUser) && (
                 <div className="mt-8 space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-                  <a
-                    href="#"
+                  <button
+                    onClick={handleNavigation}
                     className="inline-flex items-center px-6 py-4 font-semibold text-white transition-all duration-200 bg-sky-600 rounded-md hover:bg-sky-700 focus:bg-sky-700"
                     role="button"
                   >
                     {isAdmin ? "Schedule Operations" : "Book Room"}
                     <FaCalendarAlt className="w-5 h-5 ml-3" />
-                  </a>
+                  </button>
                   <a
                     href="#"
                     className="inline-flex items-center px-6 py-4 font-semibold text-sky-700 transition-all duration-200 bg-sky-100 rounded-md hover:bg-sky-200 focus:bg-sky-200"
@@ -59,7 +62,6 @@ const HeroSection = ({ userRole }) => {
                   {isAdmin ? "View as user? " : "Are you an admin? "}
                   <Link
                     to={"/login"}
-                    href="#"
                     title=""
                     className="text-black transition-all duration-200 hover:underline"
                   >
