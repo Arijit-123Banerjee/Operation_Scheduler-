@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   HiOutlineClipboardList,
-  HiOutlineUserGroup,
-  HiOutlineShoppingBag,
-  HiOutlineCalendar,
-  HiOutlineUser,
   HiOutlineLogout,
   HiOutlineMenuAlt2,
   HiOutlineHome,
+  HiOutlineUser,
 } from "react-icons/hi";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
 
-const Sidebar = () => {
+const UserSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => {
+
+  const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
@@ -22,44 +20,36 @@ const Sidebar = () => {
     { icon: HiOutlineHome, label: "Home", path: "/" },
     {
       icon: MdOutlineDashboardCustomize,
-      label: "Dashboard",
-      path: "/admindashboard",
+      label: "User Dashboard",
+      path: "/userdashboard",
     },
     {
       icon: HiOutlineClipboardList,
-      label: "Operations",
-      path: "/admindashboard/operations",
+      label: "My Patients",
+      path: "/userdashboard/tasks",
     },
     {
-      icon: HiOutlineUserGroup,
-      label: "Doctors",
-      path: "/admindashboard/doctors",
+      icon: HiOutlineUser,
+      label: "My Profile",
+      path: "/userdashboard/myoperation",
     },
   ];
 
   return (
     <div className="fixed z-50">
       <button
-        onClick={toggleMenu}
+        onClick={toggleSidebar}
         className="fixed top-4 left-4 z-30 text-gray-600 hover:text-sky-600 focus:outline-none"
       >
         <HiOutlineMenuAlt2 className="w-6 h-6" />
       </button>
+
       <div
         className={`fixed top-0 left-0 h-full ${
           isOpen ? "w-64" : "w-16"
         } bg-white text-gray-800 shadow-lg transition-all duration-300 ease-in-out z-20`}
       >
-        <div className="p-4 mt-16">
-          <h2
-            className={`text-xl font-bold ${
-              isOpen ? "" : "hidden"
-            } text-sky-600`}
-          >
-            Dashboard
-          </h2>
-        </div>
-        <nav className="mt-8">
+        <nav className="mt-40">
           <ul className="space-y-2">
             {menuItems.map(({ icon: Icon, label, path }) => (
               <li key={label}>
@@ -89,6 +79,7 @@ const Sidebar = () => {
             ))}
           </ul>
         </nav>
+
         <div className="absolute bottom-0 w-full p-4 hover:bg-red-50 cursor-pointer group">
           <HiOutlineLogout
             className={`inline-block ${
@@ -108,15 +99,14 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Mobile menu toggle */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black opacity-30"
-          onClick={toggleMenu}
+          onClick={toggleSidebar}
         ></div>
       )}
     </div>
   );
 };
 
-export default Sidebar;
+export default UserSidebar;

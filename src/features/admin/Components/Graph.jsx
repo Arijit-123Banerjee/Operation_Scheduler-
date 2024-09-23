@@ -8,7 +8,7 @@ import {
 import StatCard from "./StatCard";
 import BarChartComponent from "./BarChartComponent";
 import PieChartComponent from "./PieChartComponent";
-import useGraphStore from "../../zustand/useGraphStore";
+import useGraphStore from "../../../zustand/useGraphStore";
 
 const iconMap = {
   FaUserMd: FaUserMd,

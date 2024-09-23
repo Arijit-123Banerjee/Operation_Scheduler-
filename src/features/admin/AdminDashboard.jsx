@@ -9,7 +9,7 @@ const AdminDashboard = () => {
         <Sidebar />
       </div>
 
-      <div className="flex-1 md:ml-20 max-sm:ml-14 ">
+      <div className="flex-1 md:ml-14 max-sm:ml-14  ">
         <Outlet />
       </div>
     </div>

@@ -1,7 +1,7 @@
 const StatCard = ({ icon: Icon, color, value, name }) => {
   return (
-    <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md transform hover:scale-105 transition-transform duration-300">
-      <div className="flex items-center justify-between mb-2 sm:mb-4">
+    <div className="relative z-10 bg-white p-4 sm:p-6 rounded-xl shadow-md transform hover:scale-105 transition-transform duration-300 ">
+      <div className="flex items-center justify-between mb-2 sm:mb-4 ">
         <div className="bg-indigo-100 p-2 sm:p-3 rounded-full">
           <Icon className="text-2xl sm:text-3xl" style={{ color }} />
         </div>

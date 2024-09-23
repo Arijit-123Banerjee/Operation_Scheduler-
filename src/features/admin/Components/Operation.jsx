@@ -9,9 +9,10 @@ import {
   FaTrash,
   FaSearch,
 } from "react-icons/fa";
+
 import { MdPerson } from "react-icons/md";
 import OperationModal from "./OperationModal";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../../components/Spinner";
 import {
   collection,
   addDoc,
@@ -22,7 +23,7 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
+import { db } from "../../../firebase/firebaseConfig";
 
 const Operation = () => {
   const [operations, setOperations] = useState([]);
@@ -105,7 +106,7 @@ const Operation = () => {
       <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
         <button
           onClick={() => setIsModalOpen(true)}
-          className="create-operation-btn bg-[#0284c7] hover:bg-[#0273a1] text-white font-bold py-3 px-6 rounded-full mb-4 sm:mb-0 flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+          className="create-operation-btn bg-gradient-to-r from-[#0284c7] to-[#0273a1] hover:from-[#0273a1] hover:to-[#02608b] text-white font-bold py-3 px-6 rounded-full mb-4 sm:mb-0 flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
         >
           <FaPlus className="mr-2" />
           <span>Create New Operation</span>
@@ -117,7 +118,7 @@ const Operation = () => {
             placeholder="Search by patient name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#0284c7] transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
           />
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>
@@ -140,7 +141,7 @@ const Operation = () => {
           {filteredOperations.map((op) => (
             <div
               key={op.id}
-              className="bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:scale-105"
+              className="bg-gradient-to-r from-white to-[#f0f9ff] rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:scale-105"
             >
               <div className="flex justify-between items-center mb-4">
                 <h2 className="font-bold text-xl text-gray-800 flex items-center">

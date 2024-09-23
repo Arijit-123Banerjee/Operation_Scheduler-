@@ -16,7 +16,7 @@ import { Spin as Hamburger } from "hamburger-react";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
-export default function Navbar({ userRole }) {
+export default function Navbar({ userRole, isLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
   const isAdmin = userRole === "admin";
   const isUser = userRole === "user";
@@ -82,41 +82,28 @@ export default function Navbar({ userRole }) {
           </div>
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
-              {isAdmin ? (
-                <>
-                  <button
-                    className="flex items-center justify-center px-4 py-2 border border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white rounded-md text-sm font-medium transition-colors duration-200 mr-2"
-                    onClick={handleRegister}
-                  >
-                    <FaUserPlus className="h-4 w-4 mr-2" />
-                    Sign up for free
-                  </button>
-                  <Link to={"/admindashboard"}>
-                    <button className="flex items-center justify-center px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
-                      <FaCalendarAlt className="h-4 w-4 mr-2" />
-                      Schedule an operation
-                    </button>
-                  </Link>
-                </>
-              ) : isUser ? (
-                <button className="flex items-center justify-center px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
-                  <FaSignOutAlt className="h-4 w-4 mr-2" />
-                  Sign Out
+              {!isLoggedIn && (
+                <button
+                  className="flex items-center justify-center px-4 py-2 border border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white rounded-md text-sm font-medium transition-colors duration-200 mr-2"
+                  onClick={handleRegister}
+                >
+                  <FaUserPlus className="h-4 w-4 mr-2" />
+                  Sign up for free
                 </button>
-              ) : (
-                <>
-                  <button
-                    className="flex items-center justify-center px-4 py-2 border border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white rounded-md text-sm font-medium transition-colors duration-200 mr-2"
-                    onClick={handleRegister}
-                  >
-                    <FaUserPlus className="h-4 w-4 mr-2" />
-                    Sign up for free
-                  </button>
+              )}
+              {isAdmin && (
+                <Link to={"/admindashboard"}>
                   <button className="flex items-center justify-center px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
-                    <FaHotel className="h-4 w-4 mr-2" />
-                    Book a room
+                    <FaCalendarAlt className="h-4 w-4 mr-2" />
+                    Schedule an operation
                   </button>
-                </>
+                </Link>
+              )}
+              {isUser && (
+                <button className="flex items-center justify-center px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
+                  <FaHotel className="h-4 w-4 mr-2" />
+                  Book a room
+                </button>
               )}
             </div>
           </div>
@@ -148,39 +135,26 @@ export default function Navbar({ userRole }) {
           </div>
           <div className="pt-4 pb-3 border-t border-sky-200">
             <div className="flex flex-col items-center px-5 space-y-2">
-              {isAdmin ? (
-                <>
-                  <button
-                    className="flex items-center justify-center w-full px-4 py-2 border border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white rounded-md text-sm font-medium transition-colors duration-200"
-                    onClick={handleRegister}
-                  >
-                    <FaUserPlus className="h-4 w-4 mr-2" />
-                    Sign up for free
-                  </button>
-                  <button className="flex items-center justify-center w-full px-4 py-2 bg-sky-600 text-white  hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
-                    <FaCalendarAlt className="h-4 w-4 mr-2" />
-                    Schedule an operation
-                  </button>
-                </>
-              ) : isUser ? (
-                <button className="flex items-center justify-center w-full px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
-                  <FaSignOutAlt className="h-4 w-4 mr-2" />
-                  Sign Out
+              {!isLoggedIn && (
+                <button
+                  className="flex items-center justify-center w-full px-4 py-2 border border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white rounded-md text-sm font-medium transition-colors duration-200"
+                  onClick={handleRegister}
+                >
+                  <FaUserPlus className="h-4 w-4 mr-2" />
+                  Sign up for free
                 </button>
-              ) : (
-                <>
-                  <button
-                    className="flex items-center justify-center w-full px-4 py-2 border border-sky-600 text-sky-600 hover:bg-sky-600 hover:text-white rounded-md text-sm font-medium transition-colors duration-200"
-                    onClick={handleRegister}
-                  >
-                    <FaUserPlus className="h-4 w-4 mr-2" />
-                    Sign up for free
-                  </button>
-                  <button className="flex items-center justify-center w-full px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
-                    <FaHotel className="h-4 w-4 mr-2" />
-                    Book a room
-                  </button>
-                </>
+              )}
+              {isAdmin && (
+                <button className="flex items-center justify-center w-full px-4 py-2 bg-sky-600 text-white  hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
+                  <FaCalendarAlt className="h-4 w-4 mr-2" />
+                  Schedule an operation
+                </button>
+              )}
+              {isUser && (
+                <button className="flex items-center justify-center w-full px-4 py-2 bg-sky-600 text-white hover:bg-sky-700 rounded-md text-sm font-medium transition-colors duration-200">
+                  <FaHotel className="h-4 w-4 mr-2" />
+                  Book a room
+                </button>
               )}
             </div>
           </div>

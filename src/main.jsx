@@ -5,10 +5,12 @@ import App from "./App.jsx";
 import "./index.css";
 import Register from "./features/auth/Resigter.jsx";
 import Login from "./features/auth/Login.jsx";
-import AdminDashboard from "./admin/AdminDashboard.jsx";
-import Graph from "./admin/Components/Graph.jsx";
-import Operation from "./admin/Components/Operation.jsx";
-import Doctors from "./admin/Components/Doctors.jsx";
+import AdminDashboard from "./features/admin/AdminDashboard.jsx";
+import Graph from "./features/admin/Components/Graph.jsx";
+import Operation from "./features/admin/Components/Operation.jsx";
+import Doctors from "./features/admin/Components/Doctors.jsx";
+import UserDashboard from "./features/user/UserDashboard.jsx";
+import UserFeature from "./features/user/UserFeature.jsx";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +36,11 @@ const router = createBrowserRouter([
         element: <Doctors />,
       },
     ],
+  },
+  {
+    path: "/userdashboard",
+    element: <UserDashboard />,
+    children: [{ path: "/userdashboard", element: <UserFeature /> }],
   },
 ]);
 

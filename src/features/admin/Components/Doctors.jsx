@@ -3,9 +3,8 @@ import { FaUserMd, FaPhone, FaStar, FaPlus } from "react-icons/fa";
 import DoctorsAddModal from "./DoctorsAddModal";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "../../firebase/firebaseConfig";
-import Spinner from "../../components/Spinner";
-
+import { db, storage } from "../../../firebase/firebaseConfig";
+import Spinner from "../../../components/Spinner";
 const DoctorCard = ({
   name,
   profession,
@@ -92,7 +91,7 @@ const Doctors = () => {
         <h2 className="text-3xl font-bold text-[#0284c7]">Doctors</h2>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="bg-[#0284c7] hover:bg-[#0273a1] text-white font-bold py-2 px-4 rounded flex items-center"
+          className="bg-[#0284c7] hover:bg-[#0273a1] text-white font-bold py-2 px-4 rounded-full flex items-center"
           disabled={isLoading}
         >
           <FaPlus className="mr-2" />
