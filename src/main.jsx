@@ -6,7 +6,9 @@ import "./index.css";
 import Register from "./features/auth/Resigter.jsx";
 import Login from "./features/auth/Login.jsx";
 import AdminDashboard from "./admin/AdminDashboard.jsx";
-import UserDashboard from "./user/UserDashboard.jsx";
+import Graph from "./admin/Components/Graph.jsx";
+import Operation from "./admin/Components/Operation.jsx";
+import Doctors from "./admin/Components/Doctors.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +17,24 @@ const router = createBrowserRouter([
   },
   { path: "/register", element: <Register /> },
   { path: "/login", element: <Login /> },
-  { path: "/admindashboard", element: <AdminDashboard /> },
-  { path: "/userdashboard", element: <UserDashboard /> },
+  {
+    path: "/admindashboard",
+    element: <AdminDashboard />,
+    children: [
+      {
+        path: "/admindashboard",
+        element: <Graph />,
+      },
+      {
+        path: "/admindashboard/operations",
+        element: <Operation />,
+      },
+      {
+        path: "/admindashboard/doctors",
+        element: <Doctors />,
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(

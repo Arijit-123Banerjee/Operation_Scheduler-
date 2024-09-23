@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
-  FaList,
-  FaUserMd,
-  FaStore,
-  FaCalendarAlt,
-  FaUser,
-  FaSignOutAlt,
-} from "react-icons/fa";
+  HiOutlineClipboardList,
+  HiOutlineUserGroup,
+  HiOutlineShoppingBag,
+  HiOutlineCalendar,
+  HiOutlineUser,
+  HiOutlineLogout,
+  HiOutlineMenuAlt2,
+  HiOutlineHome,
+} from "react-icons/hi";
+import { MdOutlineDashboardCustomize } from "react-icons/md";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,35 +19,39 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  return (
-    <div className="fixed z-0">
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm z-0"
-          onClick={toggleMenu}
-        ></div>
-      )}
+  const menuItems = [
+    {
+      icon: HiOutlineHome,
+      label: "Home",
+      path: "/",
+    },
+    {
+      icon: MdOutlineDashboardCustomize,
+      label: "Dashboard",
+      path: "/admindashboard",
+    },
+    {
+      icon: HiOutlineClipboardList,
+      label: "Operations",
+      path: "/admindashboard/operations",
+    },
+    {
+      icon: HiOutlineUserGroup,
+      label: "Doctors",
+      path: "/admindashboard/doctors",
+    },
+    // { icon: HiOutlineShoppingBag, label: "Store", path: "/store" },
+    // { icon: HiOutlineCalendar, label: "Appointments", path: "/appointments" },
+    // { icon: HiOutlineUser, label: "User Profile", path: "/profile" },
+  ];
 
+  return (
+    <div className="fixed z-50">
       <button
         onClick={toggleMenu}
-        className={`absolute top-4 left-4 z-30 ${
-          isOpen ? "text-sky-600" : "text-gray-600"
-        } focus:outline-none`}
+        className="fixed top-4 left-4 z-30 text-gray-600 hover:text-sky-600 focus:outline-none"
       >
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
+        <HiOutlineMenuAlt2 className="w-6 h-6" />
       </button>
 
       <div
@@ -51,9 +59,9 @@ const Sidebar = () => {
           isOpen ? "w-64" : "w-16"
         } bg-white text-gray-800 shadow-lg transition-all duration-300 ease-in-out z-20`}
       >
-        <div className="p-4">
+        <div className="p-4 mt-16">
           <h2
-            className={`text-lg font-semibold mt-10 ${
+            className={`text-xl font-bold ${
               isOpen ? "" : "hidden"
             } text-sky-600`}
           >
@@ -62,50 +70,50 @@ const Sidebar = () => {
         </div>
         <nav className="mt-8">
           <ul className="space-y-2">
-            {[
-              { icon: FaList, label: "Operations" },
-              { icon: FaUserMd, label: "Doctors" },
-              { icon: FaStore, label: "Store" },
-              { icon: FaCalendarAlt, label: "Appointments" },
-              { icon: FaUser, label: "User Profile" },
-            ].map(({ icon: Icon, label }) => (
-              <li
-                key={label}
-                className="px-4 py-8 hover:bg-sky-100 cursor-pointer group relative"
-              >
-                <Icon
-                  className={`inline-block ${
-                    isOpen ? "mr-2" : "mx-auto"
-                  } text-sky-600`}
-                />
-                <span
-                  className={
-                    isOpen
-                      ? ""
-                      : "hidden group-hover:block absolute left-16 bg-white text-gray-800 px-2 py-1 rounded shadow-md"
-                  }
+            {menuItems.map(({ icon: Icon, label, path }) => (
+              <li key={label}>
+                <Link
+                  to={path}
+                  className="block px-4 py-3 hover:bg-sky-50 cursor-pointer group relative"
                 >
-                  {label}
-                </span>
+                  <Icon
+                    className={`inline-block ${
+                      isOpen ? "mr-3" : "mx-auto"
+                    } text-gray-600 group-hover:text-sky-600 w-6 h-6`}
+                  />
+                  <span
+                    className={`${
+                      isOpen ? "inline-block" : "hidden"
+                    } group-hover:text-sky-600`}
+                  >
+                    {label}
+                  </span>
+                  {!isOpen && (
+                    <span className="hidden group-hover:block absolute left-16 bg-white text-gray-800 px-2 py-1 rounded shadow-md">
+                      {label}
+                    </span>
+                  )}
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <div className="absolute bottom-0 w-full p-4 hover:bg-red-100 cursor-pointer group ">
-          <FaSignOutAlt
+        <div className="absolute bottom-0 w-full p-4 hover:bg-red-50 cursor-pointer group">
+          <HiOutlineLogout
             className={`inline-block ${
-              isOpen ? "mr-2" : "mx-auto"
-            } text-red-500`}
+              isOpen ? "mr-3" : "mx-auto"
+            } text-red-500 w-6 h-6`}
           />
           <span
-            className={
-              isOpen
-                ? ""
-                : "hidden group-hover:block absolute left-16 bg-white text-gray-800 px-2 py-1 rounded shadow-md"
-            }
+            className={`${isOpen ? "inline-block" : "hidden"} text-red-500`}
           >
             Logout
           </span>
+          {!isOpen && (
+            <span className="hidden group-hover:block absolute left-16 bg-white text-gray-800 px-2 py-1 rounded shadow-md">
+              Logout
+            </span>
+          )}
         </div>
       </div>
     </div>

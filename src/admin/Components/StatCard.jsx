@@ -1,6 +1,3 @@
-// StatCard.js
-import React from "react";
-
 const StatCard = ({ icon: Icon, color, value, name }) => {
   return (
     <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md transform hover:scale-105 transition-transform duration-300">

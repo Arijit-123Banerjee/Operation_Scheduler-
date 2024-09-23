@@ -11,10 +11,10 @@ import { FaChartPie } from "react-icons/fa";
 
 const PieChartComponent = ({ data }) => {
   return (
-    <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+    <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
       <div className="flex items-center mb-4">
-        <FaChartPie className="text-xl sm:text-2xl text-indigo-600 mr-2" />
-        <h3 className="text-xl sm:text-2xl font-semibold text-indigo-800">
+        <FaChartPie className="text-xl sm:text-2xl text-[#0284c7] mr-2" />
+        <h3 className="text-xl sm:text-2xl font-semibold text-[#0284c7]">
           Distribution
         </h3>
       </div>
@@ -38,13 +38,17 @@ const PieChartComponent = ({ data }) => {
           </Pie>
           <Tooltip
             contentStyle={{
-              backgroundColor: "#f7fafc",
+              backgroundColor: "#f0f9ff",
               border: "none",
               borderRadius: "8px",
               fontSize: "12px",
+              color: "#0284c7",
             }}
           />
-          <Legend iconType="circle" wrapperStyle={{ fontSize: "12px" }} />
+          <Legend
+            iconType="circle"
+            wrapperStyle={{ fontSize: "12px", color: "#0284c7" }}
+          />
         </PieChart>
       </ResponsiveContainer>
     </div>
