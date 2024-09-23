@@ -14,17 +14,12 @@ import { MdOutlineDashboardCustomize } from "react-icons/md";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   const menuItems = [
-    {
-      icon: HiOutlineHome,
-      label: "Home",
-      path: "/",
-    },
+    { icon: HiOutlineHome, label: "Home", path: "/" },
     {
       icon: MdOutlineDashboardCustomize,
       label: "Dashboard",
@@ -40,9 +35,6 @@ const Sidebar = () => {
       label: "Doctors",
       path: "/admindashboard/doctors",
     },
-    // { icon: HiOutlineShoppingBag, label: "Store", path: "/store" },
-    // { icon: HiOutlineCalendar, label: "Appointments", path: "/appointments" },
-    // { icon: HiOutlineUser, label: "User Profile", path: "/profile" },
   ];
 
   return (
@@ -53,7 +45,6 @@ const Sidebar = () => {
       >
         <HiOutlineMenuAlt2 className="w-6 h-6" />
       </button>
-
       <div
         className={`fixed top-0 left-0 h-full ${
           isOpen ? "w-64" : "w-16"
@@ -74,12 +65,12 @@ const Sidebar = () => {
               <li key={label}>
                 <Link
                   to={path}
-                  className="block px-4 py-3 hover:bg-sky-50 cursor-pointer group relative"
+                  className="flex items-center px-4 py-3 hover:bg-sky-50 cursor-pointer group relative transition-colors duration-200"
                 >
                   <Icon
-                    className={`inline-block ${
+                    className={`text-gray-600 group-hover:text-sky-600 w-6 h-6 ${
                       isOpen ? "mr-3" : "mx-auto"
-                    } text-gray-600 group-hover:text-sky-600 w-6 h-6`}
+                    }`}
                   />
                   <span
                     className={`${
@@ -116,6 +107,14 @@ const Sidebar = () => {
           )}
         </div>
       </div>
+
+      {/* Mobile menu toggle */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-30"
+          onClick={toggleMenu}
+        ></div>
+      )}
     </div>
   );
 };

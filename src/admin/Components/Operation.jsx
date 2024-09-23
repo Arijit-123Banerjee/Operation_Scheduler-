@@ -7,6 +7,7 @@ import {
   FaHospital,
   FaEdit,
   FaTrash,
+  FaSearch,
 } from "react-icons/fa";
 import { MdPerson } from "react-icons/md";
 import OperationModal from "./OperationModal";
@@ -28,6 +29,7 @@ const Operation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [editingOperation, setEditingOperation] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchOperations();
@@ -90,20 +92,36 @@ const Operation = () => {
     setIsModalOpen(true);
   };
 
+  const filteredOperations = operations.filter((op) =>
+    op.patientName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="operation-scheduler p-8 bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe] min-h-screen">
-      <h1 className="text-4xl font-bold mb-8 text-[#0284c7] text-center">
+    <div className="operation-scheduler p-4 sm:p-8 bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe] min-h-screen">
+      <h1 className="text-3xl sm:text-4xl font-bold mb-8 text-[#0284c7] text-center">
         Operation Scheduler
       </h1>
 
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="create-operation-btn bg-[#0284c7] hover:bg-[#0273a1] text-white font-bold py-3 px-6 rounded-full mb-8 flex items-center justify-center mx-auto transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
-      >
-        <FaPlus className="mr-2 sm:inline" />
-        <span className="sm:inline hidden">Create New Operation</span>
-        <span className="inline sm:hidden">Create</span>
-      </button>
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="create-operation-btn bg-[#0284c7] hover:bg-[#0273a1] text-white font-bold py-3 px-6 rounded-full mb-4 sm:mb-0 flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+        >
+          <FaPlus className="mr-2" />
+          <span>Create New Operation</span>
+        </button>
+
+        <div className="relative w-full sm:w-64">
+          <input
+            type="text"
+            placeholder="Search by patient name"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#0284c7]"
+          />
+          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        </div>
+      </div>
 
       <OperationModal
         isOpen={isModalOpen}
@@ -118,69 +136,61 @@ const Operation = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="overflow-x-auto bg-white rounded-xl shadow-2xl">
-          <table className="operations-table w-full">
-            <thead className="bg-[#0284c7] text-white">
-              <tr>
-                <th className="py-4 px-6 text-left">
-                  <MdPerson className="inline mr-2" /> Patient Name
-                </th>
-                <th className="py-4 px-6 text-left">
-                  <FaCalendarAlt className="inline mr-2" /> Date
-                </th>
-                <th className="py-4 px-6 text-left">
-                  <FaClock className="inline mr-2" /> Time
-                </th>
-                <th className="py-4 px-6 text-left">Status</th>
-                <th className="py-4 px-6 text-left">
-                  <FaUserMd className="inline mr-2" /> Doctor Name
-                </th>
-                <th className="py-4 px-6 text-left">
-                  <FaHospital className="inline mr-2" /> OT Room
-                </th>
-                <th className="py-4 px-6 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {operations.map((op) => (
-                <tr
-                  key={op.id}
-                  className="border-b border-gray-200 hover:bg-[#e0f2fe] transition duration-150 ease-in-out"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredOperations.map((op) => (
+            <div
+              key={op.id}
+              className="bg-white rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:scale-105"
+            >
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="font-bold text-xl text-gray-800 flex items-center">
+                  <MdPerson className="mr-2 text-[#0284c7] text-2xl" />
+                  {op.patientName}
+                </h2>
+                <span
+                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    op.status === "Scheduled"
+                      ? "bg-yellow-200 text-yellow-800"
+                      : "bg-green-200 text-green-800"
+                  }`}
                 >
-                  <td className="py-4 px-6 font-medium">{op.patientName}</td>
-                  <td className="py-4 px-6">{op.date}</td>
-                  <td className="py-4 px-6">{op.time}</td>
-                  <td className="py-4 px-6">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        op.status === "Scheduled"
-                          ? "bg-yellow-200 text-yellow-800"
-                          : "bg-green-200 text-green-800"
-                      }`}
-                    >
-                      {op.status}
-                    </span>
-                  </td>
-                  <td className="py-4 px-6">{op.doctorName}</td>
-                  <td className="py-4 px-6">{op.otRoom}</td>
-                  <td className="py-4 px-6">
-                    <button
-                      onClick={() => handleEdit(op)}
-                      className="text-blue-600 hover:text-blue-800 mr-2"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(op.id)}
-                      className="text-red-600 hover:text-red-800"
-                    >
-                      <FaTrash />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  {op.status}
+                </span>
+              </div>
+              <div className="space-y-2 text-gray-600">
+                <p className="flex items-center">
+                  <FaCalendarAlt className="mr-2 text-[#0284c7]" />
+                  <span className="font-medium">Date:</span> {op.date}
+                </p>
+                <p className="flex items-center">
+                  <FaClock className="mr-2 text-[#0284c7]" />
+                  <span className="font-medium">Time:</span> {op.time}
+                </p>
+                <p className="flex items-center">
+                  <FaUserMd className="mr-2 text-[#0284c7]" />
+                  <span className="font-medium">Doctor:</span> {op.doctorName}
+                </p>
+                <p className="flex items-center">
+                  <FaHospital className="mr-2 text-[#0284c7]" />
+                  <span className="font-medium">OT Room:</span> {op.otRoom}
+                </p>
+              </div>
+              <div className="flex justify-end space-x-2 mt-4">
+                <button
+                  onClick={() => handleEdit(op)}
+                  className="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                >
+                  <FaEdit className="text-xl" />
+                </button>
+                <button
+                  onClick={() => handleDelete(op.id)}
+                  className="text-red-600 hover:text-red-800 transition-colors duration-200"
+                >
+                  <FaTrash className="text-xl" />
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

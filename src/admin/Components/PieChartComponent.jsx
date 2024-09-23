@@ -14,11 +14,14 @@ const PieChartComponent = ({ data }) => {
     <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
       <div className="flex items-center mb-4">
         <FaChartPie className="text-xl sm:text-2xl text-[#0284c7] mr-2" />
-        <h3 className="text-xl sm:text-2xl font-semibold text-[#0284c7]">
+        <h3 className="text-lg sm:text-xl font-semibold text-[#0284c7]">
           Distribution
         </h3>
       </div>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer
+        width="100%"
+        height={window.innerWidth < 640 ? 250 : 300}
+      >
         <PieChart>
           <Pie
             data={data}
