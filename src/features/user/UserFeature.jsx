@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import VideoSection from "../../components/VideoSection.jsx";
-import AddPatientModal from "./AddPatientModal.jsx";
+import { Link } from "react-router-dom";
 const UserFeature = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -24,15 +24,17 @@ const UserFeature = () => {
             world-renowned doctors. Your health is our priority.
           </p>
           <div className="space-x-0 sm:space-x-4 flex flex-col sm:flex-row items-center justify-center">
-            <button
-              onClick={openModal}
+            <Link
+              to="/userdashboard/bookambulance"
               className="bg-white text-sky-600 font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-gray-100 transition mb-4 sm:mb-0"
             >
-              Add Patient
-            </button>
-            <button className="bg-white text-sky-600 font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-gray-100 transition">
-              Book a Room
-            </button>
+              Book Ambulance
+            </Link>
+            <Link to="/userdashboard/myoperation">
+              <button className="bg-white text-sky-600 font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-gray-100 transition">
+                Show Operation Details
+              </button>
+            </Link>
           </div>
         </div>
       </div>

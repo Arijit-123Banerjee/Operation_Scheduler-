@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.css";
 import Register from "./features/auth/Resigter.jsx";
@@ -11,8 +11,10 @@ import Operation from "./features/admin/Components/Operation.jsx";
 import Doctors from "./features/admin/Components/Doctors.jsx";
 import UserDashboard from "./features/user/UserDashboard.jsx";
 import UserFeature from "./features/user/UserFeature.jsx";
+import MyOperation from "./features/user/MyOperation.jsx";
+import BookAmbulance from "./features/user/BookAmbulance.jsx";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <App />,
@@ -40,7 +42,11 @@ const router = createBrowserRouter([
   {
     path: "/userdashboard",
     element: <UserDashboard />,
-    children: [{ path: "/userdashboard", element: <UserFeature /> }],
+    children: [
+      { path: "/userdashboard", element: <UserFeature /> },
+      { path: "/userdashboard/myoperation", element: <MyOperation /> },
+      { path: "/userdashboard/bookambulance", element: <BookAmbulance /> },
+    ],
   },
 ]);
 

@@ -5,9 +5,9 @@ import {
   HiOutlineLogout,
   HiOutlineMenuAlt2,
   HiOutlineHome,
-  HiOutlineUser,
 } from "react-icons/hi";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
+import { PiAmbulance } from "react-icons/pi";
 
 const UserSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,12 +26,12 @@ const UserSidebar = () => {
     {
       icon: HiOutlineClipboardList,
       label: "My Patients",
-      path: "/userdashboard/tasks",
+      path: "/userdashboard/myoperation",
     },
     {
-      icon: HiOutlineUser,
-      label: "My Profile",
-      path: "/userdashboard/myoperation",
+      icon: PiAmbulance,
+      label: "Book Ambulance",
+      path: "/userdashboard/bookambulance",
     },
   ];
 
