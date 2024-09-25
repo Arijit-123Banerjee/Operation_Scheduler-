@@ -44,8 +44,8 @@ const MyOperation = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-8 ">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">
+    <div className="max-w-5xl mx-auto p-8 bg-[#f0f9ff] min-h-screen">
+      <h1 className="text-4xl font-bold text-[#0284c7] mb-6 text-center">
         My Operation Details
       </h1>
       <p className="text-lg text-gray-600 mb-4 text-center">
@@ -63,11 +63,11 @@ const MyOperation = () => {
           placeholder="e.g. John Doe Smith"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full sm:w-96 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 max-sm:rounded-full"
+          className="w-full sm:w-96 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[#0284c7] max-sm:rounded-full"
         />
         <button
           onClick={handleSearch}
-          className="bg-indigo-600 text-white px-5 py-3 rounded-r-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex items-center max-sm:p-3 max-sm:rounded-full max"
+          className="bg-[#0284c7] text-white px-5 py-3 rounded-r-lg hover:bg-[#026ca3] focus:outline-none flex items-center max-sm:p-3 max-sm:rounded-full"
         >
           <BiSearch className="inline-block mr-2" />{" "}
           <p className="max-sm:hidden">Search</p>
@@ -121,7 +121,7 @@ const MyOperation = () => {
         </div>
       </div>
 
-      <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+      <h2 className="text-2xl font-bold text-[#0284c7] mb-4 text-center">
         Hospital Location
       </h2>
       <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg">
@@ -139,8 +139,8 @@ const MyOperation = () => {
 };
 
 const InfoItem = ({ icon, label, value }) => (
-  <div className="flex items-center space-x-3 bg-gray-50 p-4 rounded-md shadow-sm">
-    <div className="text-indigo-500 text-xl">{icon}</div>
+  <div className="flex items-center space-x-3 bg-[#e0f2fe] p-4 rounded-md shadow-sm">
+    <div className="text-[#0284c7] text-xl">{icon}</div>
     <div>
       <p className="text-sm font-semibold text-gray-700">{label}:</p>
       <p className="text-lg text-gray-900">{value}</p>

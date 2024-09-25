@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import content from "../assets/DoctorContent.json"; // Import the JSON content
+import content from "../assets/DoctorContent.json";
 
 const CarouselSection = () => {
   const scrollContainerRef = useRef(null);

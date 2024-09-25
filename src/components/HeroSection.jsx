@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 const HeroSection = ({ userRole }) => {
   const isAdmin = userRole === "admin";
   const isUser = userRole === "user";
-  const navigate = useNavigate(); // Hook for programmatic navigation
+  const navigate = useNavigate();
 
   const handleNavigation = () => {
     if (isAdmin) {

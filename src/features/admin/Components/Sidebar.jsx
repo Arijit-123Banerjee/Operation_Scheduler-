@@ -11,6 +11,7 @@ import {
   HiOutlineHome,
 } from "react-icons/hi";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
+import { useLocation } from "react-router-dom";
 
 const UserSidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +21,11 @@ const UserSidebar = ({ children }) => {
   };
 
   const menuItems = [
-    { icon: HiOutlineHome, label: "Home", path: "/" },
+    {
+      icon: HiOutlineHome,
+      label: "Home",
+      path: "/",
+    },
     {
       icon: MdOutlineDashboardCustomize,
       label: "User Dashboard",
@@ -28,12 +33,12 @@ const UserSidebar = ({ children }) => {
     },
     {
       icon: HiOutlineClipboardList,
-      label: "My Tasks",
+      label: "Operations",
       path: "/admindashboard/operations",
     },
     {
       icon: HiOutlineUser,
-      label: "My Profile",
+      label: "Doctors",
       path: "/admindashboard/doctors",
     },
   ];

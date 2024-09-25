@@ -1,4 +1,6 @@
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 const Footer = () => {
   return (
@@ -6,7 +8,9 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           <div className="text-center md:text-left">
-            <h3 className="text-xl font-semibold mb-2">Your Company Name</h3>
+            <Link to="/" className="flex-shrink-0">
+              <img src={logo} alt="logo" className="h-8 w-8" />
+            </Link>
             <p className="text-sm">
               &copy; {new Date().getFullYear()} All rights reserved.
             </p>
