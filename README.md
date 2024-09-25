@@ -44,6 +44,6 @@ This application is **currently under development**, and more features will be a
 
 🚧 **Check out the live version on Vercel** 
 
-🔗 [Operation Scheduler on Vercel](operation-scheduler.vercel.app)
+🔗 [Operation Scheduler on Vercel](https://operation-scheduler.vercel.app)
 
 Stay tuned for updates as we continue improving the app!
